@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello World</title>
+</head>
+<body>
+	<form method="post" enctype="multipart/form-data">
+		<div>
+			<label>Torrent: </label>
+			<input type="file" name="t">
+		</div>
+		<div>
+			<label>Client: </label>
+			<select name="client">
+			<% for(var i in clients) {%>
+				<option value="<%= i %>"><%= i %></option>
+			<% } %>				
+			</select>
+		</div>
+		<div><input type="submit" value="upload"></div>
+	</form>
+</body>
+</html>
