@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var fs = require('fs');
+var cfg = require('../config/server.js');
 
 // websocket
 var WebSocketServer = require('ws').Server;
@@ -9,10 +10,10 @@ var wss = new WebSocketServer({port: 8080});
 var wsClients = {};
 
 wss.on('connection', function(ws) {
-   var client_id = require('shortid').generate();
-   wsClients[client_id] = ws;
-   ws.send(client_id);
-   console.log("New user joined: " + client_id);
+  var client_id = require('shortid').generate();
+  wsClients[client_id] = ws;
+  ws.send(client_id);
+  //console.log("New user joined: " + client_id);
 });
 
 /* GET home page. */
@@ -26,16 +27,32 @@ router.post('/', function(req, res) {
     var client_id = '';
 
     form.parse(req, function(error, fields, files){
-    	filename = './torrents/'+files.t.name;
+    	filename = cfg.torrent_path + files.t.name;
     	fs.rename(files.t.path, filename);
     	client_id = fields.client;
 
     }).on('end', function(){
     	if( wsClients && client_id && typeof wsClients[client_id] == 'object' ) {
-    		wsClients[client_id].send(filename)
+    		wsClients[client_id].send(cfg.torrent_host + filename)
     	}
     	res.send(filename);
     })
 })
 
+router.get('/torrents/*', function(req, res){
+  var file = cfg.torrent_path + req.params[0];
+  var filename = require('path').basename(file);
+  var mimetype = require('mime').lookup(file); 
+  res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+  res.setHeader('Content-type', mimetype);
+
+  var filestream = fs.createReadStream(file);
+  filestream.on('data', function(chunk) {
+    res.write(chunk);
+  });
+
+  filestream.on('end', function() {
+    res.end();
+  });
+})
 module.exports = router;
