@@ -3,6 +3,7 @@ var router = express.Router();
 var formidable = require('formidable');
 var fs = require('fs');
 var cfg = require('../config/server.js');
+var user = require('./user.js');
 
 // websocket
 var WebSocketServer = require('ws').Server;
@@ -38,14 +39,6 @@ router.post('/', function(req, res) {
 	})
 })
 
-router.get('/reg', function(req, res) {
- 	res.render('register', {});
-})
-
-router.post('/reg', function(req, res) {
-	
-})
-
 router.get('/torrents/*', function(req, res){
 	var file = cfg.torrent_path + req.params[0];
 	var filename = require('path').basename(file);
@@ -62,4 +55,8 @@ router.get('/torrents/*', function(req, res){
 		res.end();
 	});
 })
+
+router.get('/signup', user.signup);
+router.post('/signup', user.create);
+
 module.exports = router;

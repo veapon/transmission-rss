@@ -9,11 +9,13 @@ var app = express();
 var mongoose = require('mongoose');
 
 // database setup
+/*
 var cfg = require('./config/server.js');
 mongoose.connect(cfg.db_uri);
 mongoose.connection.on('error', function(err){
     console.log(err);
 })
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
