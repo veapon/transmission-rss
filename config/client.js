@@ -1,5 +1,5 @@
 var config = {
-	"server": "localhost:8080"
+	"server": "localhost:6080",
 	"torrent_path": "target/"
 }
 

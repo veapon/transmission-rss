@@ -10,49 +10,56 @@ var wss = new WebSocketServer({port: cfg.ws_port});
 var wsClients = {};
 
 wss.on('connection', function(ws) {
-  var client_id = require('shortid').generate();
-  wsClients[client_id] = ws;
-  ws.send(client_id);
-  //console.log("New user joined: " + client_id);
+	var client_id = require('shortid').generate();
+	wsClients[client_id] = ws;
+	ws.send(client_id);
 });
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	res.render('index', { clients: wsClients });
+	res.render('index', { clients: wsClients, page_title: "Add torrent" });
 });
 
 router.post('/', function(req, res) {
-    var form = new formidable.IncomingForm();
-    var filename = '';
-    var client_id = '';
+	var form = new formidable.IncomingForm();
+	var filename = '';
+	var client_id = '';
 
-    form.parse(req, function(error, fields, files){
-    	filename = cfg.torrent_path + files.t.name;
-    	fs.rename(files.t.path, filename);
-    	client_id = fields.client;
+	form.parse(req, function(error, fields, files){
+		filename = cfg.torrent_path + files.t.name;
+		fs.rename(files.t.path, filename);
+		client_id = fields.client;
 
-    }).on('end', function(){
-    	if( wsClients && client_id && typeof wsClients[client_id] == 'object' ) {
-    		wsClients[client_id].send(cfg.torrent_host + filename)
-    	}
-    	res.send(filename);
-    })
+	}).on('end', function(){
+		if( wsClients && client_id && typeof wsClients[client_id] == 'object' ) {
+			wsClients[client_id].send(cfg.torrent_host + filename)
+		}
+		res.send(filename);
+	})
+})
+
+router.get('/reg', function(req, res) {
+ 	res.render('register', {});
+})
+
+router.post('/reg', function(req, res) {
+	
 })
 
 router.get('/torrents/*', function(req, res){
-  var file = cfg.torrent_path + req.params[0];
-  var filename = require('path').basename(file);
-  var mimetype = require('mime').lookup(file); 
-  res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-  res.setHeader('Content-type', mimetype);
+	var file = cfg.torrent_path + req.params[0];
+	var filename = require('path').basename(file);
+	var mimetype = require('mime').lookup(file); 
+	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+	res.setHeader('Content-type', mimetype);
 
-  var filestream = fs.createReadStream(file);
-  filestream.on('data', function(chunk) {
-    res.write(chunk);
-  });
+	var filestream = fs.createReadStream(file);
+	filestream.on('data', function(chunk) {
+		res.write(chunk);
+	});
 
-  filestream.on('end', function() {
-    res.end();
-  });
+	filestream.on('end', function() {
+		res.end();
+	});
 })
 module.exports = router;

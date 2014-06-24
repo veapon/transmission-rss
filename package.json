@@ -17,6 +17,7 @@
     "shortid": "*",
     "formidable": "*",
     "mime": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "mongoose": "*"
   }
 }

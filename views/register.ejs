@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><%= page_title %></title>
+	<title>Register</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -12,36 +12,38 @@
 	<div class="container-fluid">
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
+				<li><a href="/">Home</a></li>
+				<li class="active">Register</li>
 			</ol>
 		</div>
 		<div class="row">
-			<form class="form-horizontal" role="form" enctype="multipart/form-data">
+			<form class="form-horizontal" role="form" method="post">
 				
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Torrent</label>
+					<label class="col-sm-2 control-label">Email</label>
 					<div class="col-sm-3">
-						<input type="file" name="t">
+						<input type="email" name="email" class="form-control">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-3">
+						<input type="password" name="password" class="form-control">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Client</label>
+					<label class="col-sm-2 control-label">Confirm</label>
 					<div class="col-sm-3">
-						<select class="form-control">
-							<% for(var i=0; i<clients.length; i++) { %>
-								<option value="<%= clients[i] %>"><%= clients[i] %></option>
-							<% } %>
-						</select>
+						<input type="password" name="Confirm" class="form-control">
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label class="col-sm-2 control-label">&nbsp;</label>
 					<div class="col-sm-3">
-						<input type="submit" value="Submit" class="btn btn-default">
+						<input type="submit" value="Register" class="btn-default btn">
 					</div>
 				</div>
 
