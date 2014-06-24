@@ -7,7 +7,10 @@ ws.on('open', function() {
 });
 ws.on('message', function(data, flags) {
     console.log(data);
-	var filename = require('path').basename(data);
+    var path = require('path');
+    if( path.extname(data) != '.torrent' ) return;
+
+	var filename = path.basename(data);
 	var dest = cfg.torrent_path + filename;
     require('http').get(data, function(res){
     	var file = require('fs').createWriteStream(dest);
