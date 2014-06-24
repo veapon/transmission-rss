@@ -6,7 +6,7 @@ var cfg = require('../config/server.js');
 
 // websocket
 var WebSocketServer = require('ws').Server;
-var wss = new WebSocketServer({port: 8080});
+var wss = new WebSocketServer({port: cfg.ws_port});
 var wsClients = {};
 
 wss.on('connection', function(ws) {

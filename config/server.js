@@ -1,6 +1,7 @@
 var config = {
 	"http_port": 6000,
-	"torrent_host": "http://localhost:3000/",
+	"ws_port": 6080,
+	"torrent_host": "http://localhost:6000/",
 	"torrent_path": "torrents/"
 }
 
