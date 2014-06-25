@@ -4,10 +4,16 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
-
 var app = express();
+var mongoose = require('mongoose');
+
+// database setup
+var cfg = require('./config/server.js');
+mongoose.connect(cfg.db_uri);
+mongoose.connection.on('error', function(err){
+    console.log(err);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 
 /// catch 404 and forward to error handler

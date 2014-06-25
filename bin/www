@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var debug = require('debug')('node-transmission');
-var app = require('../app');
-var cfg = require('../config/server.js');
+var app = require('../server');
+var cfg = require('../config/server');
 
 app.set('port', process.env.PORT || cfg.http_port);
 
