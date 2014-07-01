@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var fs = require('fs');
-var cfg = require('../config/server.js');
-var user = require('./user.js');
+var cfg = require('../config/server');
+var user = require('./user');
 
 // websocket
 var WebSocketServer = require('ws').Server;

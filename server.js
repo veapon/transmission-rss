@@ -4,18 +4,18 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var routes = require('./routes/index');
+var routes = require('./routes/router');
 var app = express();
 var mongoose = require('mongoose');
 
 // database setup
-/*
-var cfg = require('./config/server.js');
+
+var cfg = require('./config/server');
 mongoose.connect(cfg.db_uri);
 mongoose.connection.on('error', function(err){
     console.log(err);
 })
-*/
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

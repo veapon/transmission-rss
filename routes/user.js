@@ -1,3 +1,7 @@
+var mongoose = require('mongoose');
+var userSchema = require('../models/user');
+var userModel = mongoose.model('user', userSchema);
+
 /**
  * User home
  */
@@ -17,7 +21,23 @@ module.exports.signup = function(req, res) {
  * User register
  */
 module.exports.create = function(req, res) {
+	userModel.create(req.body, function(err, user){
+		var ret = {status: 0};
+		if (err) {
+			console.log(err);
+			if (typeof(err.err) != 'undefined' && err.code == 11000) {
+				ret.msg = 'Email is already taken';
+			} else {
+				ret.msg = 'All fields are required';
+			}
+		} else {
+			ret.status = 1;
+			ret.data = {uid: user._id};
+		}
 
+		res.send(ret);
+
+	})
 }
 
 /**
