@@ -24,7 +24,6 @@ module.exports.create = function(req, res) {
 	userModel.create(req.body, function(err, user){
 		var ret = {status: 0};
 		if (err) {
-			console.log(err);
 			if (typeof(err.err) != 'undefined' && err.code == 11000) {
 				ret.msg = 'Email is already taken';
 			} else {
@@ -32,11 +31,10 @@ module.exports.create = function(req, res) {
 			}
 		} else {
 			ret.status = 1;
-			ret.data = {uid: user._id};
+			ret.data = {link: 'signin?user='+user.email};
 		}
 
 		res.send(ret);
-
 	})
 }
 
@@ -44,7 +42,7 @@ module.exports.create = function(req, res) {
  * login page
  */
 module.exports.login = function(req, res) {
-
+	res.render('login', req.query)
 }
 
 /**

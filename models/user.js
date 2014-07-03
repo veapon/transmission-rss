@@ -3,8 +3,14 @@ var schema = mongoose.Schema;
 
 var userSchema = new schema({
 	email: {type:String, required: true, unique: true, validate: [is_email, 'Not a valid email address.']},
-	pwd: {type:String, required: true, unique: false},
+	pwd: {type:String, required: true},
 	clients: []
+})
+
+userSchema.pre('save', function (next) {
+	var md5 = require('MD5');
+	this.pwd = md5(this.pwd);
+  	next();
 })
 
 function is_email(str){

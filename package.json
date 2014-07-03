@@ -18,6 +18,7 @@
     "formidable": "*",
     "mime": "*",
     "mongodb": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "MD5": "*"
   }
 }

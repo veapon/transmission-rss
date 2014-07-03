@@ -59,4 +59,7 @@ router.get('/torrents/*', function(req, res){
 router.get('/signup', user.signup);
 router.post('/signup', user.create);
 
+router.get('/signin', user.login);
+router.post('/signin', user.ensure);
+
 module.exports = router;

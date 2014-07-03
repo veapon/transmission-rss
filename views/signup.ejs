@@ -61,7 +61,10 @@ $(function(){
 			dataType: 'json'
 		}).done(function(res){
 			if (res.status) {
-				$('#message').removeClass('text-danger').addClass('text-success').html('Success! <a href="signin">Signin now!</a>');
+				$('#message').removeClass('text-danger').addClass('text-success').html('Success! <a href="'+res.data.link+'">Signin now!</a>');
+				setTimeout(function(){
+					document.location.href = res.data.link;
+				}, 1000);
 			} else {
 				$('#message').removeClass('text-success').addClass('text-danger').text('Server response error: '+res.msg);
 			}
