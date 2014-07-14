@@ -13,6 +13,7 @@ userSchema.pre('save', function (next) {
   	next();
 })
 
+
 function is_email(str){
 	return /^[a-z0-9]+([\+_\-\.]?[a-z0-9]+)*@(([a-z0-9]+\.)?[a-z0-9]+[\-]?[a-z0-9]+\.[a-z]{1,6})$/.test(str);
 }

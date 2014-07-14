@@ -11,16 +11,13 @@ var wss = new WebSocketServer({port: cfg.ws_port});
 var wsClients = {};
 
 wss.on('connection', function(ws) {
-	var client_id = require('shortid').generate();
-	wsClients[client_id] = ws;
-	ws.send(client_id);
+	ws.on('message', function(message) {
+    	eval('var user = ' + message);
+    	console.log(typeof user);
+    });
 });
 
 /* GET home page. */
-router.get('/', function(req, res) {
-	res.render('index', { clients: wsClients, page_title: "Add torrent" });
-});
-
 router.post('/', function(req, res) {
 	var form = new formidable.IncomingForm();
 	var filename = '';
@@ -55,6 +52,8 @@ router.get('/torrents/*', function(req, res){
 		res.end();
 	});
 })
+
+router.get('/', user.home);
 
 router.get('/signup', user.signup);
 router.post('/signup', user.create);

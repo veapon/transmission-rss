@@ -61,7 +61,7 @@ $(function(){
 			dataType: 'json'
 		}).done(function(res){
 			if (res.status) {
-				$('#message').removeClass('text-danger').addClass('text-success').html('Success! <a href="'+res.data.link+'">Signin now!</a>');
+				document.location.href = '/';
 			} else {
 				$('#message').removeClass('text-success').addClass('text-danger').text('Server response error: '+res.msg);
 			}

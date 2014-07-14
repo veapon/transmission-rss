@@ -19,6 +19,7 @@
     "mime": "*",
     "mongodb": "*",
     "mongoose": "*",
-    "MD5": "*"
+    "MD5": "*",
+    "express-session": "*"
   }
 }

@@ -49,5 +49,24 @@ module.exports.login = function(req, res) {
  * login action
  */
 module.exports.ensure = function(req , res) {
+	userModel.findOne({email: req.body.email}, 'pwd', function(err, data){
+		var md5 = require('MD5');
+		var ret = {status: 0};
+		if (typeof data.pwd != 'string') {
+			ret.msg = 'Account not found.'
+		} else if (md5(req.body.pwd) != data.pwd) {
+			ret.msg = 'Password incorrect.';
+		} else {
+			ret.status = 1;
+			ret.user = {uid: data._id, email: req.body.email};
+			req.session.uid = data._id;
+		}
+		
+		res.send(ret);
+	});
+}
 
+module.exports.home = function(req, res) {
+	console.log(req.session);
+	res.send(req.session);
 }

@@ -3,7 +3,12 @@ var cfg = require('./config/client.js');
 var WebSocket = require('ws');
 var ws = new WebSocket('ws://' + cfg.server);
 ws.on('open', function() {
-    ws.send('something');
+    if( typeof(cfg.uid) == 'undefined' || !cfg.uid )
+    {
+        console.log('No uid provided, please edit the config/client.js file');
+        return false;
+    }
+    ws.send('{uid: "'+cfg.uid+'", name: "'+cfg.client_name+'"}');
 });
 ws.on('message', function(data, flags) {
     console.log(data);
