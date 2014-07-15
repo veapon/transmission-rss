@@ -8,12 +8,18 @@ var user = require('./user');
 // websocket
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({port: cfg.ws_port});
-var wsClients = {};
+global.wsClients = {};
 
 wss.on('connection', function(ws) {
 	ws.on('message', function(message) {
-    	eval('var user = ' + message);
-    	console.log(typeof user);
+    	eval('var client = ' + message);
+    	
+    	if (typeof client == 'undefined' || typeof client.uid == 'undefine') {
+    		ws.send('Cannot find specified account');
+    	}
+    	wsClients[client.uid] = [];
+    	wsClients[client.uid].push(client.name);
+    	ws.send('new connection accept')
     });
 });
 

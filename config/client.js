@@ -1,6 +1,6 @@
 var config = {
-	"uid": "53c3a29a6b2c582e75368e11",
-	"client_name": "Office",
+	"uid": "53c52c10a525537e3ed5354f",
+	"client_name": "home-pc",
 	"server": "localhost:6080",
 	"torrent_path": "target/"
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><%= page_title %></title>
+	<title>Home</title>
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -31,8 +31,8 @@
 					<label class="col-sm-2 control-label">Client</label>
 					<div class="col-sm-3">
 						<select class="form-control">
-							<% for(var i=0; i<clients.length; i++) { %>
-								<option value="<%= clients[i] %>"><%= clients[i] %></option>
+							<% for (var i in clients) { %>
+								<option value="<%= i %>"><%= clients[i] %></option>
 							<% } %>
 						</select>
 					</div>
