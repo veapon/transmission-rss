@@ -78,7 +78,7 @@ module.exports.home = function(req, res) {
 	}
 
 	if (typeof(wsClients) == 'undefined' || typeof(wsClients[req.session.uid]) == 'undefined') {
-		var data = {msg: 'Account not found or no client of the account was connected to server.'};
+		var data = {uid: req.session.uid, msg: 'Account not found or no client of the account was connected to server.'};
 	} else {
 		var data = {clients: wsClients[req.session.uid], uid: req.session.uid};
 	}
