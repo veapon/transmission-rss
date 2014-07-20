@@ -17,8 +17,8 @@ wss.on('connection', function(ws) {
     	if (typeof client == 'undefined' || typeof client.uid == 'undefine') {
     		ws.send('Cannot find specified account');
     	}
-    	wsClients[client.uid] = [];
-    	wsClients[client.uid].push(client.name);
+    	wsClients[client.uid] = {};
+    	wsClients[client.uid][client.name] = ws;
     	ws.send('new connection accept')
     });
 });
@@ -27,18 +27,25 @@ wss.on('connection', function(ws) {
 router.post('/', function(req, res) {
 	var form = new formidable.IncomingForm();
 	var filename = '';
+	var uid = '';
 	var client_id = '';
 
 	form.parse(req, function(error, fields, files){
 		filename = cfg.torrent_path + files.t.name;
 		fs.rename(files.t.path, filename);
+		uid = fields.uid;
 		client_id = fields.client;
 
 	}).on('end', function(){
-		if( wsClients && client_id && typeof wsClients[client_id] == 'object' ) {
-			wsClients[client_id].send(cfg.torrent_host + filename)
+		console.log(wsClients);
+		if( wsClients && uid && typeof wsClients[uid] == 'object' ) {
+			for (var i in wsClients[uid]) {
+				if (i == client_id) {
+					wsClients[uid][i].send(cfg.torrent_host + filename);
+				}
+			}
 		}
-		res.send(filename);
+		//res.send(filename);
 	})
 })
 
