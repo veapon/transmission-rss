@@ -45,7 +45,7 @@ router.post('/', function(req, res) {
 				}
 			}
 		}
-		//res.send(filename);
+		res.send(filename);
 	})
 })
 
