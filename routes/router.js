@@ -35,7 +35,10 @@ router.post('/', function(req, res) {
 		uid = fields.uid;
 		client_id = fields.client;
 		fs.rename(files.t.path, filename, function(err){
-			if (err) throw err;
+			if (err) {
+				console.log(err);
+				return false;
+			}
 			console.log('Now sending torrent to '+uid+'...');
 		});
 
@@ -52,12 +55,13 @@ router.post('/', function(req, res) {
 })
 
 router.get('/torrents/*', function(req, res){
+
 	var file = cfg.torrent_path + req.params[0];
 	var filename = require('path').basename(file);
 	var mimetype = require('mime').lookup(file); 
 	res.setHeader('Content-disposition', 'attachment; filename=' + filename);
 	res.setHeader('Content-type', mimetype);
-
+	console.log(filename);
 	var filestream = fs.createReadStream(file);
 	filestream.on('data', function(chunk) {
 		res.write(chunk);
@@ -66,6 +70,10 @@ router.get('/torrents/*', function(req, res){
 	filestream.on('end', function() {
 		res.end();
 	});
+
+	filestream.on('error', function(err){
+		console.log(err);
+	})
 })
 
 router.get('/', user.home);
