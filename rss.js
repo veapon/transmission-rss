@@ -6,7 +6,7 @@ var rss_url = 'http://pt.hd4fans.org/torrentrss.php';
 
 rss();
 
-// retrieve feed
+// retrieve rss feed ever 30 mins
 setInterval(function(){
     rss(); 
 }, 1800000)
