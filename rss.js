@@ -2,7 +2,7 @@
 var torrent_dir = '/share/torrents/';
 
 // RSS url
-var rss_url = 'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=47bc1ed13feef5ea2baf68584f8b3a3a&inclbookmarked=1';
+var rss_url = 'http://pt.hd4fans.org/torrentrss.php';
 
 rss();
 
@@ -47,31 +47,42 @@ function rss()
 
             // destination file, replace space with dot(.)
             var dest = torrent_dir + item.title.replace(/\s/g, '.') + '.torrent';
-
+            
             // the torrent url
             var torrent_url = item.enclosures[0].url;
 
-            require('http').get(torrent_url, function(res){
+            fs.exists(dest, function (exists) {
 
-                res.on('error', function(err){
-                    die(err);
-                })
+                if (exists) {
+                    die('Torrent :'+dest+' exists, skipped.');
+                } else {
+                    require('http').get(torrent_url, function(res){
 
-                // create and download torrent file
-                var file = fs.createWriteStream(dest);
-                res.pipe(file);
+                        res.on('error', function(err){
+                            die(err);
+                        })
 
-                file.on('finish', function(){
-                    console.log('['+new Date().toLocaleString()+']Download success: '+dest);
-                    file.close();
-                })
+                        // create and download torrent file
+                        var file = fs.createWriteStream(dest);
+                        res.pipe(file);
 
-                file.on('error', function(err){
-                    file.close();
-                    die('['+new Date().toLocaleString()+']Download failed: torrent_url, '+err);
-                })
+                        file.on('finish', function(){
+                            console.log('['+new Date().toLocaleString()+']Download success: '+dest);
+                            file.close();
+                        })
+
+                        file.on('error', function(err){
+                            file.close();
+                            die('['+new Date().toLocaleString()+']Download failed: torrent_url, '+err);
+                        })
+                    });
+                    // http.get() end
+                }
+                // exists end
+
             });
         }
+        // stream.read() end
 
     });
 }
