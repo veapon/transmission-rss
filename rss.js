@@ -2,11 +2,21 @@
 var torrent_dir = '/share/torrents/';
 
 // RSS url
-var rss_url = 'http://pt.hd4fans.org/torrentrss.php?rows=10&cat401=1';
+var rss_url = 'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=47bc1ed13feef5ea2baf68584f8b3a3a&inclbookmarked=1';
 
+rss();
 
-// make this script excute every hour
+// retrieve feed
 setInterval(function(){
+    rss(); 
+}, 1800000)
+
+function die(msg) {
+    console.log(msg);
+}
+
+function rss()
+{
     var FP = require('feedparser');
     var request = require('request');
     var fs = require('fs');
@@ -64,10 +74,4 @@ setInterval(function(){
         }
 
     });
-
-    function die(msg) {
-        console.log(msg);
-    }
-
-}, 3600000)
-
+}
