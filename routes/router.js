@@ -32,12 +32,14 @@ router.post('/', function(req, res) {
 
 	form.parse(req, function(error, fields, files){
 		filename = cfg.torrent_path + files.t.name;
-		fs.rename(files.t.path, filename);
 		uid = fields.uid;
 		client_id = fields.client;
+		fs.rename(files.t.path, filename, function(err){
+			if (err) throw err;
+			console.log('Now sending torrent to '+uid+'...');
+		});
 
 	}).on('end', function(){
-		console.log(wsClients);
 		if( wsClients && uid && typeof wsClients[uid] == 'object' ) {
 			for (var i in wsClients[uid]) {
 				if (i == client_id) {
