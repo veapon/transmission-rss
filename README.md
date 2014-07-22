@@ -1,2 +1,2 @@
-node-transmission
+transmission-rss
 =================
