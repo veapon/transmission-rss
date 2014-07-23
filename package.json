@@ -20,6 +20,8 @@
     "mongodb": "*",
     "mongoose": "*",
     "MD5": "*",
-    "express-session": "*"
+    "express-session": "*",
+    "feedparser": "*",
+    "request": "*"
   }
 }
