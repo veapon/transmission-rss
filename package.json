@@ -8,6 +8,8 @@
   "dependencies": {
     "feedparser": "*",
     "request": "*",
-    "later": "*"
+    "later": "*",
+
+    "ws": "*"
   }
 }
