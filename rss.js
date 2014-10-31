@@ -5,6 +5,7 @@ var torrent_dir = '/share/torrents/';
 var rss_url = 'http://pt.hd4fans.org/torrentrss.php';
 
 rss();
+log('test');
 
 // retrieve rss feed ever 30 mins
 setInterval(function(){
@@ -85,4 +86,12 @@ function rss()
         // stream.read() end
 
     });
+}
+
+function log(str)
+{
+    var fs = require('fs');
+    var log_path = './logs/rss.log';
+    
+    fs.appendFileSync(log_path, str+"\n", {flag: 'a+'});
 }
