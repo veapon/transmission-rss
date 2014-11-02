@@ -1,25 +1,27 @@
 // transmission's watch_dir
 var torrent_dir = 'torrents/';
 
-// RSS url
-var rss_url = [
+// RSS 
+var rss = [
 	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
 	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
 	];
 
-rss();
-
-
+for (i in rss) {
+	rss(rss[i]);
+}
 // retrieve rss feed every 30 mins
 setInterval(function(){
-	rss(); 
+	for (i in rss) {
+		rss(rss[i]);
+	}
 }, 1800000)
 
 function die(msg) {
 	console.log(msg);
 }
 
-function rss()
+function rss(rss_url)
 {
 	var FP = require('feedparser');
 	var request = require('request');
