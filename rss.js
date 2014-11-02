@@ -8,12 +8,12 @@ var rss = [
 	];
 
 for (i in rss) {
-	rss(rss[i]);
+	retrieve(rss[i]);
 }
 // retrieve rss feed every 30 mins
 setInterval(function(){
 	for (i in rss) {
-		rss(rss[i]);
+		retrieve(rss[i]);
 	}
 }, 1800000)
 
@@ -21,7 +21,7 @@ function die(msg) {
 	console.log(msg);
 }
 
-function rss(rss_url)
+function retrieve(rss_url)
 {
 	var FP = require('feedparser');
 	var request = require('request');
