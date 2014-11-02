@@ -3,10 +3,8 @@ var torrent_dir = 'torrents/';
 
 // RSS 
 var rss = [
-	//'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
-	//,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
-	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=47bc1ed13feef5ea2baf68584f8b3a3a&inclbookmarked=1'
-	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=d3cb418c4293e7141087c8d44f51b49d&inclbookmarked=1'
+	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
+	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
 	];
 
 for (i in rss) {
