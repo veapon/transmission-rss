@@ -3,11 +3,14 @@ var torrent_dir = 'torrents/';
 
 // RSS 
 var rss = [
-	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
-	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
+	//'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
+	//,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
+	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=47bc1ed13feef5ea2baf68584f8b3a3a&inclbookmarked=1'
+	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=d3cb418c4293e7141087c8d44f51b49d&inclbookmarked=1'
 	];
 
 for (i in rss) {
+	console.log(rss[i]);
 	retrieve(rss[i]);
 }
 // retrieve rss feed every 30 mins
@@ -63,7 +66,13 @@ function retrieve(rss_url)
 				continue;
 			}
 
-			require('http').get(torrent_url, function(res){
+			if (torrent_url.indexOf('https') > -1) {
+				var http = require('https');
+			} else {
+				var http = require('http');
+			}
+
+			http.get(torrent_url, function(res){
 
 				res.on('error', function(err){
 					die(err);
