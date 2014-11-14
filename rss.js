@@ -1,22 +1,16 @@
-// transmission's watch_dir
-var torrent_dir = 'torrents/';
+// Import module config. Including rss_urls, torrent_dir
+require('./config.js');
 
-// RSS 
-var rss = [
-	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
-	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&passkey=xxx&inclbookmarked=1'
-	];
-
-for (i in rss) {
-	console.log(rss[i]);
-	retrieve(rss[i]);
+for (i in rss_urls) {
+	//console.log(rss[i]);
+	retrieve(rss_urls[i]);
 }
 // retrieve rss feed every 30 mins
 setInterval(function(){
-	for (i in rss) {
-		retrieve(rss[i]);
+	for (i in rss_urls) {
+		retrieve(rss_urls[i]);
 	}
-}, 1800000)
+}, 900000)
 
 function die(msg) {
 	console.log(msg);
@@ -53,10 +47,19 @@ function retrieve(rss_url)
 			//console.log('['+new Date().toLocaleString()+']Downloading torrent: '+item.enclosures[0].url);
 
 			// destination file, replace space with dot(.)
-			var dest = torrent_dir + item.title.replace(/\s/g, '.') + '.torrent';
+			var dest = torrent_dir + item.title.replace(/[\s\/]/g, '.') + '.torrent';
 
 			// the torrent url
-			var torrent_url = item.enclosures[0].url;
+			// bittorrent RSS tags reference: http://www.bittorrent.org/beps/bep_0036.html
+			if (typeof item.enclosures[0] != 'undefined') {
+				var torrent_url = item.enclosures[0].url;
+			} else {
+				var torrent_url = item.link;
+			}
+			
+			if (!torrent_url) {
+				continue;
+			}
 
 			// break if the url is exists
 			var logs = get_log();
@@ -82,7 +85,7 @@ function retrieve(rss_url)
 
 				file.on('finish', function(){
 					var logs = get_log();
-					console.log(torrent_url);
+					//console.log(torrent_url);
 					if (typeof logs != 'undefined' && /\S/.test(logs)) {
 						set_log(',' + torrent_url);
 					} else {
@@ -108,7 +111,7 @@ function retrieve(rss_url)
 function set_log(str)
 {
 	var fs = require('fs');
-	var log_path = './logs/rss.log';
+	var log_path = './logs/torrents.log';
 
 	fs.writeFileSync(log_path, str, {flag: 'a+'});
 	return true;
@@ -117,7 +120,18 @@ function set_log(str)
 function get_log()
 {
 	var fs = require('fs');
-	var log_path = './logs/rss.log';
+	var log_path = './logs/torrents.log';
+	var data;
 
-	return fs.readFileSync(log_path, {encoding: 'utf-8', flag: 'a+'});
+	try{
+		data = fs.readFileSync(log_path, {encoding: 'utf-8', flag: 'a+'});
+	} catch (e){
+		if (e.code === 'ENOENT') {
+		  	fs.writeFileSync(log_path, '', {flag: 'a+'});
+		} else {
+		  	throw e;
+		}
+	}
+
+	return data;
 }
