@@ -1,8 +1,8 @@
 # Logs
-logs/*
+logs
 
 # torrents
-torrents/*
+torrents
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:
