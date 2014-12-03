@@ -111,7 +111,7 @@ function retrieve(rss_url)
 function set_log(str)
 {
 	var fs = require('fs');
-	var log_path = './logs/torrents.log';
+	var log_path = process.cwd() + '/logs/torrents.log';
 
 	fs.writeFileSync(log_path, str, {flag: 'a+'});
 	return true;
@@ -120,7 +120,7 @@ function set_log(str)
 function get_log()
 {
 	var fs = require('fs');
-	var log_path = './logs/torrents.log';
+	var log_path = process.cwd() + '/logs/torrents.log';
 	var data;
 
 	try{
