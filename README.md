@@ -1,14 +1,15 @@
 transmission-rss
 =================
 
-## Installation
-
+### Installation
+1. Enable transmission watch-dir: [See how](https://trac.transmissionbt.com/wiki/EditConfigFiles#FilesandLocations)
+2. Run the following commands: 
 ```bash
 git clone https://github.com/veapon/transmission-rss.git
 cd transmission-rss
 
-# change the transmission's watch_dir and your rss feed url
-vim rss.js
+# change the transmission's watch-dir and your rss urls
+vim config.js
 
 cd scripts
 ./install
