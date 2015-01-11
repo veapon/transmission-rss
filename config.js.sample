@@ -1,0 +1,9 @@
+global.torrent_dir = '/share/Torrents/';
+
+global.rss_urls = [
+	'http://pt.hd4fans.org/torrentrss.php?rows=10&linktype=dl&inclbookmarked=1&passkey=YOUR_PASSKEY'
+	,'https://hdcmct.org/torrentrss.php?rows=10&linktype=dl&inclbookmarked=1&passkey=YOUR_PASSKEY'
+	,'https://tp.m-team.cc/torrentrss.php?rows=10&linktype=dl&inclbookmarked=1&passkey=YOUR_PASSKEY'
+	,'http://totheglory.im/putrssmc.php?par=TTG_PAR'
+	];
+

@@ -5,7 +5,7 @@ logs
 torrents
 
 # config
-config.js
+./config.js
 
 # Dependency directory
 # Deployed apps should consider commenting this line out:
