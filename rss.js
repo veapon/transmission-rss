@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Import module config. Including rss_urls, torrent_dir
 require('./config.js');
 
@@ -26,7 +27,8 @@ function retrieve(rss_url)
 	var feedparser = new FP({});
 
 	req.on('error', function (error) {
-		die('Error occurred while loading RSS, please check your rss_url.');
+		console.log(error);
+		die("Error occurred while loading RSS, please check your rss_url.");
 	});
 
 	req.on('response', function (res) {
