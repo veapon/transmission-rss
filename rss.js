@@ -3,7 +3,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 require('./config.js');
 
 for (i in rss_urls) {
-	//console.log(rss[i]);
+	//console.log(rss_urls[i]);
 	retrieve(rss_urls[i]);
 }
 // retrieve rss feed every 30 mins
@@ -11,7 +11,7 @@ setInterval(function(){
 	for (i in rss_urls) {
 		retrieve(rss_urls[i]);
 	}
-}, 900000)
+}, 450000)
 
 function die(msg) {
 	console.log(msg);
@@ -27,12 +27,12 @@ function retrieve(rss_url)
 	var feedparser = new FP({});
 
 	req.on('error', function (error) {
-		console.log(error);
-		die("Error occurred while loading RSS, please check your rss_url.");
+		die("Error occurred while fetching the rss_url, please check your rss_url.");
 	});
 
 	req.on('response', function (res) {
 		var stream = this;
+		console.log(stream['uri']['host'] + ' response code: ' + res.statusCode);
 		if (res.statusCode != 200) {
 			die('Error occurred while loading RSS, please check your rss_url.');
 			return false;
@@ -42,11 +42,11 @@ function retrieve(rss_url)
 
 	feedparser.on('readable', function() {
 		var stream = this;
-		var meta = this.meta;
 		var item;
 
 		while (item = stream.read()) {
-			//console.log('['+new Date().toLocaleString()+']Downloading torrent: '+item.enclosures[0].url);
+			//console.log(item);
+			console.log('['+new Date().toLocaleString()+']Downloading torrent: '+item.enclosures[0].url);
 
 			// destination file, replace space with dot(.)
 			var dest = torrent_dir + item.title.replace(/[\s\/]/g, '.') + '.torrent';
